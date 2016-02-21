@@ -8,7 +8,7 @@ Doctor Static is a static website generator, using Markdown for source content s
 Source files are Markdown with the addition of a small meta data header.  The header is easily parsed for conversion to another system, or outright removal.
 
 ### Template powered
-Most publishing systems mistakenly cram functionality into the generator.  Doctor Static prefers to broadly collect and expose data, keeping the application flexible agnostic to its implementation.
+Most publishing systems mistakenly cram functionality into the generator.  Doctor Static prefers to broadly collect and expose data, keeping the application flexible and agnostic to its implementation.
 
 This strategy allows powerful template driven systems to more fully control the presentation without cluttering application with implementation specific features.
 
@@ -24,7 +24,7 @@ Doctor Static is <500 lines, not including tests.  It is well factored, complete
 ## Why not Doctor Static?
 Doctor Static is not a "website in a box".  It is a deliberately light weight generator, intended for developers that are already familiar with web development.
 
-There are many, more fully featured, Markdown based site generators, such as Jekyll and Nikola.  
+There are many, more fully featured, Markdown based site generators that may want to consider, such as Jekyll and Nikola.  
 
 ## Dependencies
 * Python 3.5/3.x.  
@@ -37,6 +37,13 @@ There are many, more fully featured, Markdown based site generators, such as Jek
 	* Feedgen
 
 ## Usage
+
+Doctor Static should exist outside of your site project, allowing you to manage your source content, templates, css, etc in its own repository.  
+
+Your project should include a Doctor Static config module, which is given to the build script.  
+
+I recommend creating a script to wrap the build command.  An example is included the example site.
+
 ### Generate site
 	/path/to/doctor_static/build path/to/config.py
 	
