@@ -1,0 +1,44 @@
+from lib import content_updater
+from lib import cruft_remover
+from lib import manifest_populator
+from lib import tag_map_generator
+from lib import chronological_manifest_indexer
+from lib import rss_generator
+from lib import console_outputter
+from jinja2.exceptions import TemplateNotFound
+
+def execute(config):
+	Builder(
+		manifest_populator.get(config),
+		content_updater.get(config),
+		cruft_remover.get(config),
+		tag_map_generator,
+		chronological_manifest_indexer,
+		rss_generator.get(config),
+		console_outputter).execute()
+
+class Builder(object):
+
+	def __init__(self, manifest_populator, content_updater, 
+		cruft_remover, tag_map_generator, chronological_manifest_indexer,
+		rss_generator, outputter):
+		self.manifest_populator = manifest_populator
+		self.content_updater = content_updater
+		self.cruft_remover = cruft_remover
+		self.tag_map_generator = tag_map_generator
+		self.chronological_manifest_indexer = chronological_manifest_indexer
+		self.rss_generator = rss_generator
+		self.outputter = outputter
+
+	def execute(self):
+		try:
+			self.cruft_remover.update()
+			manifest = self.manifest_populator.generate()
+			tag_map = self.tag_map_generator.generate(manifest)
+			chron_list = self.chronological_manifest_indexer.generate(manifest)
+			self.content_updater.update(manifest, tag_map, chron_list)
+			self.rss_generator.generate(manifest)
+			self.outputter.out('Done')
+		except TemplateNotFound as e:
+			message = '\nError: Could not find template "{}"\n'.format(e)
+			self.outputter.out(message)

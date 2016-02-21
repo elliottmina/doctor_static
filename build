@@ -1,0 +1,20 @@
+#!/usr/bin/env python3
+
+import sys
+import importlib.util
+from lib.commands import build
+
+if len(sys.argv) == 1:
+	print('You must specify the path to your site\'s config module.')
+	exit()
+if len(sys.argv) > 2:
+	print('Expected exactly one argument, the path to your site\'s config module.')
+	exit()
+path_to_config = sys.argv[1]
+
+spec = importlib.util.spec_from_file_location('module.name', path_to_config)
+config = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(config)
+
+if __name__ == '__main__':
+	build.execute(config)
