@@ -15,7 +15,7 @@ This strategy allows powerful template driven systems to more fully control the 
 ### Quick start
 * Baked in support for tags and Atom syndication.  
 * Starting templates
-* An example site is included, ready to be customized and used.
+* An [example site](https://github.com/elliottmina/doctor_static_example) is available, ready to be customized and used.
 * Minimal technical configuration (zero configuration if using example site).
 
 ### Light weight
@@ -28,7 +28,7 @@ There are many, more fully featured, Markdown based site generators that may wan
 
 ## Dependencies
 * Python 3.5/3.x.  
-	
+
 	The application is compatible with 3.x, except dynamic module loading which changed in 3.5.  
 
 * Modules:
@@ -42,13 +42,11 @@ Doctor Static should exist outside of your site project, allowing you to manage 
 
 Your project should include a Doctor Static config module, which is given to the build script.  
 
-I recommend creating a script to wrap the build command.  An example is included the example site.
-
 ### Generate site
 	/path/to/doctor_static/build path/to/config.py
-	
+
 ### config.py
-Your config should paths to your content, template, render directories and syndication configuration.  A complete example is included in the example site.
+Your config should paths to your content, template, render directories and syndication configuration.  A complete example is included in the [example site](https://github.com/elliottmina/doctor_static_example).
 
 	CONTENT_SOURCE_DIR = 'path/to/content_source'
 	TEMPLATE_DIR = 'path/to/templates'
