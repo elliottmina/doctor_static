@@ -13,12 +13,12 @@ class ContentDeletionCollector(object):
 		self.render_dir = render_dir
 
 	def get_list(self):
-		items = []
+		files = []
 		for basename in self.file_util.listdir(self.render_dir):
 			path = self.render_dir + '/' + basename
-			if PurePath(path).suffix == '.html':
-				items.append(path)
-		return items
+			if self.file_util.isfile(path):
+				files.append(path)
+		return files
 
 	def __iter__(self):
 		return iter(self.get_list())

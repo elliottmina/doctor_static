@@ -31,6 +31,7 @@ class ContentPageGeneratorTest(unittest.TestCase):
 			RenderPath('a render dir'),
 			ConsoleOutputterStub(),)
 
+	def generate(self):
 		self.test_obj.generate(
 			'a key', 
 			self.meta_data, 
@@ -40,11 +41,13 @@ class ContentPageGeneratorTest(unittest.TestCase):
 			self.chron_list,)
 
 	def test_HtmlIsGeneratedFromSourceConverter(self):
+		self.generate()
 		self.assertEqual(
 			self.source_stream, 
 			self.source_converter.last_convert)
 
 	def test_ContentIsRenderedWithABunchOfStuff(self):
+		self.generate()
 		self.assertEqual(
 			(
 				'a template', 
@@ -60,8 +63,16 @@ class ContentPageGeneratorTest(unittest.TestCase):
 			self.template_renderer.last_render)
 
 	def test_ContentIsWrittenToFile(self):
+		self.generate()
 		self.assertEqual(
 			('a render dir/a key.html', 'some content'), 
+			self.file_util.last_write)
+
+	def test_GivenExplicitExtension_FileIsWrittenWithExtension(self):
+		self.meta_data['extension'] = '.foo'
+		self.generate()
+		self.assertEqual(
+			('a render dir/a key.foo', 'some content'), 
 			self.file_util.last_write)
 
 if __name__ == '__main__':

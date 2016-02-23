@@ -1,8 +1,9 @@
 from jinja2.exceptions import TemplateNotFound
 
 class FileUtilSpy(object):
-	def __init__(self, existing_paths):
+	def __init__(self, existing_paths, not_files=[]):
 		self.existing_paths = existing_paths
+		self.not_files = not_files
 		self.last_write = None
 		self.deletes = []
 
@@ -14,6 +15,9 @@ class FileUtilSpy(object):
 
 	def delete(self, path):
 		self.deletes.append(path)
+
+	def isfile(self, path):
+		return path not in self.not_files
 
 class FileNotFoundFileOpener(object):
 	def __init__(self, path, mode):

@@ -13,3 +13,6 @@ def exists(path):
 
 def listdir(dir):
 	return os.listdir(dir)
+
+def isfile(file):
+	return os.path.isfile(file)

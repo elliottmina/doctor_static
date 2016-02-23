@@ -35,6 +35,10 @@ class ContentPageGenerator(object):
 				'manifest':manifest,
 				'chron_list':chron_list,
 			})
-		self.file_util.write(
-			self.render_path.build_path(key), 
-			contents)
+		self.file_util.write(self.get_path(key, meta_data), contents)
+
+	def get_path(self, key, meta_data):
+		if meta_data.get('extension'):
+			return self.render_path.build_path(key, meta_data['extension'])
+		return self.render_path.build_path(key)
+
