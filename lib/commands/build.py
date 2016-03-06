@@ -4,6 +4,7 @@ from lib import manifest_populator
 from lib import tag_map_generator
 from lib import chronological_manifest_indexer
 from lib import rss_generator
+from lib import post_build_scripts_runner
 from lib import console_outputter
 from jinja2.exceptions import TemplateNotFound
 
@@ -15,19 +16,20 @@ def execute(config):
 		tag_map_generator,
 		chronological_manifest_indexer,
 		rss_generator.get(config),
+		post_build_scripts_runner.get(config),
 		console_outputter).execute()
 
 class Builder(object):
-
 	def __init__(self, manifest_populator, content_updater, 
 		cruft_remover, tag_map_generator, chronological_manifest_indexer,
-		rss_generator, outputter):
+		rss_generator, script_runner, outputter):
 		self.manifest_populator = manifest_populator
 		self.content_updater = content_updater
 		self.cruft_remover = cruft_remover
 		self.tag_map_generator = tag_map_generator
 		self.chronological_manifest_indexer = chronological_manifest_indexer
 		self.rss_generator = rss_generator
+		self.script_runner = script_runner
 		self.outputter = outputter
 
 	def execute(self):
@@ -38,6 +40,7 @@ class Builder(object):
 			chron_list = self.chronological_manifest_indexer.generate(manifest)
 			self.content_updater.update(manifest, tag_map, chron_list)
 			self.rss_generator.generate(manifest)
+			self.script_runner.execute(manifest)
 			self.outputter.out('Done')
 		except TemplateNotFound as e:
 			message = '\nError: Could not find template "{}"\n'.format(e)

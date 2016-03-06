@@ -6,6 +6,7 @@ from test_doubles import TemplateErroringContentUpdater
 from test_doubles import CruftRemoverSpy
 from test_doubles import ManifestDependentGeneratorSpy
 from test_doubles import RssGeneratorSpy
+from test_doubles import PostBuildScriptsRunnerSpy
 from test_doubles import ConsoleOutputterSpy
 from jinja2.exceptions import TemplateNotFound
 from lib.commands.build import Builder
@@ -22,6 +23,7 @@ class BuilderTest(unittest.TestCase):
 		self.chronological_manifest_indexer = ManifestDependentGeneratorSpy()
 		self.chronological_manifest_indexer.generate_return = []
 		self.rss_generator = RssGeneratorSpy()
+		self.script_runner = PostBuildScriptsRunnerSpy()
 		self.outputter = ConsoleOutputterSpy()
 		self.build_test_obj()
 
@@ -33,6 +35,7 @@ class BuilderTest(unittest.TestCase):
 			self.tag_map_generator,
 			self.chronological_manifest_indexer,
 			self.rss_generator,
+			self.script_runner,
 			self.outputter,)
 
 	def test_ManifestPopulated(self):
@@ -74,6 +77,10 @@ class BuilderTest(unittest.TestCase):
 		self.assertTrue(
 			'\nError: Could not find template "a template"\n', 
 			self.outputter.last_out)
+
+	def test_ScriptRunnerIsCalled(self):
+		self.test_obj.execute()
+		self.assertEqual(self.script_runner.last_execute, {})
 
 if __name__ == '__main__':
 	unittest.main()
