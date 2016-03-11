@@ -26,7 +26,7 @@ class RssGenerator(object):
 		self.outputter = outputter
 
 	def generate(self, manifest):
-		self.outputter.out('Creating atrom feed')
+		self.outputter.out('Creating atom feed')
 		feed_generator = self.feed_generator_factory.build()
 		self.populate_feed_required_keys(feed_generator)
 		self.populate_feed_simple_optional_keys(feed_generator)
