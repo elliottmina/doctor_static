@@ -5,6 +5,7 @@ from test_doubles import TemplateRendererSpy
 from test_doubles import FileSpy
 from test_doubles import FileUtilSpy
 from test_doubles import ConsoleOutputterStub
+from test_doubles import DatetimeUtilStub
 from lib.render_path import RenderPath
 from lib.content_page_generator import ContentPageGenerator
 
@@ -29,7 +30,8 @@ class ContentPageGeneratorTest(unittest.TestCase):
 			self.template_renderer,
 			self.file_util,
 			RenderPath('a render dir'),
-			ConsoleOutputterStub(),)
+			ConsoleOutputterStub(),
+			DatetimeUtilStub(),)
 
 	def generate(self):
 		self.test_obj.generate(
@@ -58,6 +60,7 @@ class ContentPageGeneratorTest(unittest.TestCase):
 					'key':'a key',
 					'manifest':self.manifest,
 					'chron_list':self.chron_list,
+					'today':'today'
 				}
 			), 
 			self.template_renderer.last_render)

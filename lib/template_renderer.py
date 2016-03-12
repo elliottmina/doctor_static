@@ -9,6 +9,7 @@ def get(config):
 		extensions=['jinja2.ext.loopcontrols'])
 	env.filters['tojson'] = tojson
 	env.filters['isdisjoint'] = isdisjoint
+	env.filters['timestamp_to_date'] = timestamp_to_date
 	env.filters['strftime'] = strftime
 	return TemplateRenderer(env)
 
@@ -20,8 +21,11 @@ def isdisjoint(a, b):
 		return True
 	return set(a).isdisjoint(set(b))
 
-def strftime(timestamp, format):
-	return datetime.datetime.fromtimestamp(int(timestamp)).strftime(format)
+def timestamp_to_date(timestamp):
+	return datetime.datetime.fromtimestamp(int(timestamp))
+
+def strftime(date, format):
+	return date.strftime(format)
 
 class TemplateRenderer(object):
 	def __init__(self, env):
