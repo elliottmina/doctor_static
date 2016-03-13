@@ -335,6 +335,27 @@ class RssGeneratorSpy(object):
 	def generate(self, manifest):
 		self.last_generate = manifest
 
+class ScriptRunnerSpy(object):
+	def __init__(self):
+		self.runs = []
+
+	def run(self, command, manifest):
+		self.runs.append((command, manifest))
+
+class OsSpy(object):
+	def __init__(self):
+		self.last_system = None
+
+	def system(self, command):
+		self.last_system = command
+
+class PostBuildScriptsRunnerSpy(object):
+	def __init__(self):
+		self.last_execute = None
+
+	def execute(self, manifest):
+		self.last_execute = manifest
+
 class DatetimeUtilStub(object):
 	def today(self):
 		return 'today'
