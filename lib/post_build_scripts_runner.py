@@ -8,7 +8,7 @@ def get(config):
 		scripts = config.POST_BUILD_SCRIPTS
 
 	return PostBuildScriptsRunner(
-		ScriptRunner(os), 
+		ScriptRunner(os, console_outputter), 
 		scripts, 
 		console_outputter)
 
