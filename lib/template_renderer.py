@@ -1,6 +1,7 @@
 from jinja2 import Environment, FileSystemLoader
 import json
 import datetime
+import re
 
 def get(config):
 	template_loader = FileSystemLoader(searchpath=config.TEMPLATE_DIR)
@@ -11,6 +12,7 @@ def get(config):
 	env.filters['isdisjoint'] = isdisjoint
 	env.filters['timestamp_to_date'] = timestamp_to_date
 	env.filters['strftime'] = strftime
+	env.filters['tagify'] = tagify
 	return TemplateRenderer(env)
 
 def tojson(data):
@@ -26,6 +28,9 @@ def timestamp_to_date(timestamp):
 
 def strftime(date, format):
 	return date.strftime(format)
+
+def tagify(raw_string):
+	return re.sub('[^0-9a-zA-Z]+', '', raw_string)
 
 class TemplateRenderer(object):
 	def __init__(self, env):
