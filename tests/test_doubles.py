@@ -339,8 +339,8 @@ class ScriptRunnerSpy(object):
 	def __init__(self):
 		self.runs = []
 
-	def run(self, command, manifest):
-		self.runs.append((command, manifest))
+	def run(self, command):
+		self.runs.append(command)
 
 class OsSpy(object):
 	def __init__(self):
@@ -351,11 +351,18 @@ class OsSpy(object):
 
 class PostBuildScriptsRunnerSpy(object):
 	def __init__(self):
-		self.last_execute = None
+		self.execute_called = False
 
-	def execute(self, manifest):
-		self.last_execute = manifest
+	def execute(self):
+		self.execute_called = True
 
 class DatetimeUtilStub(object):
 	def today(self):
 		return 'today'
+
+class ManifestWriterSpy(object):
+	def __init__(self):
+		self.last_write = None
+
+	def write(self, manifest):
+		self.last_write = manifest

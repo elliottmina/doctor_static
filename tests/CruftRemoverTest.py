@@ -1,6 +1,5 @@
 import fixture
 import unittest
-from lib.render_path import RenderPath
 from test_doubles import FileUtilSpy
 from test_doubles import ConsoleOutputterStub
 from lib.cruft_remover import CruftRemover

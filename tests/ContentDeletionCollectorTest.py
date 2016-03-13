@@ -1,7 +1,6 @@
 import fixture
 import unittest
 from test_doubles import FileUtilSpy
-from lib.render_path import RenderPath
 from lib.content_deletion_collector import ContentDeletionCollector
 
 class ContentDeletionCollectorTest(unittest.TestCase):

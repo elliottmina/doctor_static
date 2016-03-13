@@ -18,8 +18,8 @@ class PostBuildScriptsRunner(object):
 		self.scripts = scripts
 		self.console_outputter = console_outputter
 
-	def execute(self, manifest):
+	def execute(self):
 		self.console_outputter.out('Running post build scripts')
 		for script in self.scripts:
-			self.runner.run(script, manifest)
+			self.runner.run(script)
 

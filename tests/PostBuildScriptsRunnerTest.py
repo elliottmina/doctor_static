@@ -8,14 +8,13 @@ class PostBuildScriptsRunnerTest(unittest.TestCase):
 	def setUp(self):
 		self.runner = ScriptRunnerSpy()
 		self.scripts = []
-		self.manifest = 'manifest'
 
 	def assert_runs_equal(self, expected):
 		test_obj = PostBuildScriptsRunner(
 			self.runner, 
 			self.scripts, 
 			ConsoleOutputterSpy())
-		test_obj.execute(self.manifest)
+		test_obj.execute()
 		self.assertEqual(expected, self.runner.runs)
 		
 	def test_GivenConfigWithEmptyScripts_NoScriptsAreRun(self):
@@ -24,6 +23,6 @@ class PostBuildScriptsRunnerTest(unittest.TestCase):
 	def test_GivenConfigWithScripts_ScriptsAreRun(self):
 		self.scripts = ['spam', 'ham']
 		self.assert_runs_equal([
-			('spam', 'manifest'),
-			('ham', 'manifest'),
+			'spam',
+			'ham',
 		])

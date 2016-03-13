@@ -8,6 +8,7 @@ from test_doubles import ManifestDependentGeneratorSpy
 from test_doubles import RssGeneratorSpy
 from test_doubles import PostBuildScriptsRunnerSpy
 from test_doubles import ConsoleOutputterSpy
+from test_doubles import ManifestWriterSpy
 from jinja2.exceptions import TemplateNotFound
 from lib.commands.build import Builder
 
@@ -25,6 +26,7 @@ class BuilderTest(unittest.TestCase):
 		self.rss_generator = RssGeneratorSpy()
 		self.script_runner = PostBuildScriptsRunnerSpy()
 		self.outputter = ConsoleOutputterSpy()
+		self.manifest_writer = ManifestWriterSpy()
 		self.build_test_obj()
 
 	def build_test_obj(self):
@@ -36,7 +38,8 @@ class BuilderTest(unittest.TestCase):
 			self.chronological_manifest_indexer,
 			self.rss_generator,
 			self.script_runner,
-			self.outputter,)
+			self.outputter,
+			self.manifest_writer,)
 
 	def test_ManifestPopulated(self):
 		self.test_obj.execute()
@@ -80,7 +83,11 @@ class BuilderTest(unittest.TestCase):
 
 	def test_ScriptRunnerIsCalled(self):
 		self.test_obj.execute()
-		self.assertEqual(self.script_runner.last_execute, {})
+		self.assertTrue(self.script_runner.execute_called)
+
+	def test_ManifestWriterIsCalled(self):
+		self.test_obj.execute()
+		self.assertEqual({}, self.manifest_writer.last_write)
 
 if __name__ == '__main__':
 	unittest.main()
