@@ -61,14 +61,23 @@ class FileOpenerSpy(object):
 
 class FileSpy(object):
 	def __init__(self):
+		self.operations = []
 		self.write_buffer = ""
 		self.read_return = ""
+		self.last_seek = None
+		self.name = 'some file'
 
 	def read(self):
+		self.operations.append('read')
 		return self.read_return
 
 	def write(self, str):
+		self.operations.append('write')
 		self.write_buffer += str
+
+	def seek(self, loc):
+		self.operations.append('seek')
+		self.last_seek = loc
 
 class FileOpenerStub(object):
 	def __init__(self, path, mode):
